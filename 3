@@ -1,0 +1,76 @@
+#include <stdio.h>
+
+void swap(int* a, int* b);
+void selectionSort(int arr[], int n);
+void findMode(int arr[], int n);
+
+int main(){
+    int values[5];
+    int sum = 0;
+    printf("Enter %d integer values:\n", 5);
+    for(int i = 0; i < 5; i++){
+        scanf("%d", &values[i]);
+        sum += values[i];
+    }
+    printf("The mean is: %f\n", (float)sum / 5);
+    selectionSort(values, 5);
+    printf("The median is: %d\n", values[2]);
+    findMode(values, 5);
+    return 0;
+}
+
+void swap(int* a, int* b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void selectionSort(int arr[], int n){
+    int i, j, minIx;
+    for (i = 0; i < n - 1; i++) {
+        minIx = i;
+        for (j = i + 1; j < n; j++){
+            if (arr[j] < arr[minIx]){
+                minIx = j;
+            }
+        }
+        swap(&arr[minIx], &arr[i]);
+    }
+}
+
+void findMode(int a[], int n){
+    int i, j, sum = 0, t, b[20] = {0}, k = 0, c = 1, max = 0, mode;
+    for (i = 0; i < n - 1; i++)
+    {
+        mode = 0;
+        for (j = i + 1; j < n; j++)
+        {
+            if (a[i] == a[j]) {
+                mode++;
+            }
+        }
+        if ((mode > max) && (mode != 0)){
+            k = 0;
+            max = mode;
+            b[k] = a[i];
+            k++;
+        } else if (mode == max) {
+            b[k] = a[i];
+            k++;
+        }
+    }
+    for (i = 0; i < n; i++)
+    {
+        if (a[i] == b[i]){
+            c++;
+        } 
+    }
+    if (c == n){
+        printf("There is no mode");
+    } else {
+        printf("The mode(s) are/is = ");
+        for (i = 0; i < k; i++)
+            printf("%d ",b[i]);
+    }
+    printf("\n");
+}
